@@ -1,0 +1,206 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
+!-- jQuery and Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <script src="https://unpkg.com/htmx.org@1.6.0"></script>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+
+
+{% block metadescription %}
+
+Welcome to the covid registration website where you can book vaccination.
+
+{% endblock %}
+{% block title %}
+ {% if cities %}
+      {{cities.name}}
+{% endif %}
+{% endblock %}
+{% block content %}
+
+<!--patient details-->
+<div class="container py-5">
+	<h1>Details of the patient</h1>
+	<form method="POST">
+		{% csrf_token %}
+		<div class="form-group">
+<input type="text" class="form-control" name="patientname" placeholder="Enter your name">
+
+        </div>
+
+		<div class="form-group">
+   <input type="number" class="form-control" name="age" placeholder="Enter your age">
+
+</div>
+		<div class="form-group">
+   <input type="date"  class="form-control" name="DOB" placeholder="Enter Date of birth">
+
+</div>
+		<div class="form-group">
+   <input type="text" class="form-control" name="Address" placeholder="Enter your address">
+
+</div>
+
+
+<!--    {% for town in towns %}-->
+<!--        <option value="{{town.pk}}">{{ town.name }}</option>-->
+<!--    {% endfor %}-->
+<!--</select>-->
+
+
+
+<select class="custom-select mb-4"
+        name="city"
+        hx-get="{% url 'patientdetails:towns' %}"
+        hx-trigger="change"
+        hx-target="#towns">
+
+    <option selected>Choose your city</option>
+    {% for city in cities %}
+        <option value="{{city.pk}}">{{ city.name }}</option>
+    {% endfor %}
+</select>
+<br>
+<div id="towns">
+<select class="custom-select">
+    <option selected>Choose your vaccination center</option>
+
+    {% for town in towns %}
+        <option value="{{town.pk}}">{{ town.name }}</option>
+    {% endfor %}
+</select>
+</div>
+
+
+<!--<form action="/action_page.php">-->
+<!--  <label for="cars">Choose a district:</label>-->
+<!--  <select name="cars" id="cars">-->
+<!--         <optgroup label="Kochi">-->
+<!--    <option value="Sunrise Hospital">Sunrise Hospital</option>-->
+<!--    <option value="Kims">Kims</option>-->
+<!--    <option value="Renai medicity">Renai Medicity</option>-->
+<!--    <option value="Aster medicity">Aster medicity</option>-->
+<!--          <option value="Medical college Hospital">Medical College Hospital</option>-->
+<!--             <optgroup label="Kottayam">-->
+<!--                  <option value="Bharath Hospital">Bharath Hospital</option>-->
+<!--          <option value="kottayam malabar hospital">Kottayam malabar hospitall</option>-->
+<!--          <option value="Kottayam medicak college">Kottayam medical college</option>-->
+<!--          <option value="primary health center">Primary health center</option>-->
+
+<!--              <optgroup label="Pathanamthitta">-->
+<!--                   <option value="District Hospital">district hospital</option>-->
+<!--          <option value="community health center">Community health center</option>-->
+<!--          <option value="General Hospital">General Hospital</option>-->
+<!--          <option value="Sub dist Hospital">Sub dist hospital</option>-->
+<!--                  <optgroup label="Kollam">-->
+<!--                      <option value="thazhava phc">thazhava phc</option>-->
+<!--          <option value="alappad phc">alappad phc</option>-->
+<!--          <option value="k s puram phc">k s puram phc</option>-->
+<!--          <option value="Thodiyoor phc">Thodiyoor phc</option>-->
+<!--                      <optgroup label="Thiruvananthapuram">-->
+<!--                          <option value="azhoor phc">azhoor phc</option>-->
+<!--          <option value="pallikal phc">palikkal phc</option>-->
+<!--          <option value="keshavapuram phc">keshavapuram phc</option>-->
+<!--          <option value="kattakada phc">kattakada phc</option>-->
+<!--                        <optgroup label="Alappuzha">-->
+<!--                            <option value="ambalappuzha">Kozhikode</option>-->
+<!--          <option value="general Hospital">General Hospital</option>-->
+<!--          <option value="medical college">medical college</option>-->
+<!--          <option value="Aryad phc">Aryad phc</option>-->
+<!--                         <optgroup label="Kannur">-->
+<!--                             <option value="pappisseri phc">pappisseri phc</option>-->
+<!--          <option value="w & c hospital">w & c hospital/option>-->
+<!--          <option value="D H kannur">D H kannur</option>-->
+<!--          <option value="Chelora">Chelora phc</option>-->
+<!--                             <optgroup label="Palakkad">-->
+<!--                                 <option value="kuzhalmannam">Kuzhalmannam</option>-->
+<!--          <option value="kavasseri">Kavasseri</option>-->
+<!--          <option value="kannambra">kannambra</option>-->
+<!--          <option value="kuthannur">kuthannur</option>-->
+<!--                                 <optgroup label="Malappuram">-->
+<!--                                     <option value="oorakam">oorakam</option>-->
+<!--          <option value="pallikal">pallikal</option>-->
+<!--          <option value="parappangadi">parappangadi</option>-->
+<!--          <option value="nannambra">nannambra</option>-->
+<!--                                     <optgroup label="Wayanad">-->
+<!--                                         <option value="waniyambara">waniyambara</option>-->
+<!--          <option value="periya">periya</option>-->
+<!--          <option value="panamaram">panamaram</option>-->
+<!--          <option value="vilvattam">vilvattam</option>-->
+<!--                                         <optgroup label="Idukki">-->
+<!--                                             <option value="chithirapuram">chithirapuram</option>-->
+<!--          <option value="rajakkadu">rajakkadu</option>-->
+<!--          <option value="marayur">marayur</option>-->
+<!--          <option value="devikulam">devikulam</option>-->
+<!--                                             <optgroup label="Kasargod">-->
+<!--                                                 <option value="olath">olath</option>-->
+<!--          <option value="konnakadu">Konnakadu</option>-->
+<!--          <option value="madikkai">madikkai</option>-->
+<!--          <option value="kayyur">kayyur</option>-->
+<!--                                                 <optgroup label="Thrissur">-->
+<!--                                                     <option value="kattoor">Kattoor</option>-->
+<!--          <option value="Karalam">Karalam</option>-->
+<!--          <option value="mullasseri">mullasseri</option>-->
+<!--          <option value="valappad">valappad</option>-->
+
+<!--  </select>-->
+<!--  <br><br>-->
+<!--</form>-->
+
+    </form></div>
+
+
+
+</div>
+
+</div>
+</form>
+
+        <form action="/action_page.php">
+  <input type="checkbox" id="covishield" name="covishield" value="covishield">
+  <label for="covishield"> Covishield</label><br>
+  <input type="checkbox" id="covaccine" name="covaccine" value="covaccine">
+  <label for="covaccine"> covaccine</label><br>
+  <input type="checkbox" id="sputnik" name="sputnik" value="sputnik">
+  <label for="sputnik"> Sputnik</label><br><br>
+            <div class="form-check"></div></form>
+        <div class="form-check">
+
+  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+  <label class="form-check-label" for="flexRadioDefault1">
+    First Dose
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+  <label class="form-check-label" for="flexRadioDefault2">
+Second Dose
+  </label>
+</div>
+</form>
+		<div>
+
+
+<form class="form-inline my-2 my-lg-0">
+
+    <a href="{% url 'patientdetails:success_page' %}" class="btn btn-success  ">submit details</a>
+</form>
+        </div> </form>
+</div>
+
+
+
+</div>
+{% endblock %}

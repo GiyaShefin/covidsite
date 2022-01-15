@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+{% block metadescription %}
+
+Welcome to the covid registration website where you can book vaccination.
+
+{% endblock %}
+{% block title %}
+ {% if cities %}
+      {{cities.name}}
+{% endif %}
+{% endblock %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Booking confirmation </title>
+</head>
+<body style="text-align:center;">
+Congratulations Your booking for the vaccination is confirmed.
+Thankyou.
+
+</body>
+</html>
+{% endblock %}>

@@ -1,0 +1,33 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block metadescription %}
+
+Welcome to the covid registration website where you can book vaccination.
+
+{% endblock %}
+{% block title %}
+ {% if cities %}
+      {{cities.name}}
+{% endif %}
+{% endblock %}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+<!--Login-->
+<div class="container py-5">
+  <h1>Login</h1>
+  <form method="POST">
+    {% csrf_token %}
+    {{ login_form|crispy }}
+      <a href="{% url 'credentials:booking' %}" class="btn btn-success  ">Login</a>
+
+<!--    <button class="btn btn-primary" type="submit">Login</button>-->
+  </form>
+  <p class="text-center">Don't have an account? <a href="{% url 'credentials:register' %}">Create an account</a></p>
+</div>
+
+{% endblock %}
+ml>

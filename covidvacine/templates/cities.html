@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block metadescription %}
+
+Welcome to the covid registration website where you can book vaccination.
+
+{% endblock %}
+{% block title %}
+ {% if cities %}
+      {{cities.name}}
+{% endif %}
+{% endblock %}
+{% block content %}
+{% if cities %}
+
+    <div class="row my_row_class">
+<a href="{{city.get_url}}"></a>
+</div >
+
+
+<div><a href="{% url 'covidapp:covidreg' %}">Welcome to the vaccination booking site</a>
+ </div>
+    <div>
+</div>
+
+
+
+
+ <br>
+
+
+{% else %}
+<div>
+ <img  class="my_image my_image_padding" src="{% static 'img/logos.png' %}" alt="Vaccination Booking Site" height="auto" width="100%" >
+
+</div>
+
+
+{% endif %}
+<div>
+
+
+    </div>
+<br>
+<br>
+<br>
+<div>
+<div>
+<div class="mx_auto">
+                  <form class="d-flex" action="{% url 'credentials:login' %}" method="get">
+
+<form class="form-inline my-2 my-lg-0">
+    <h3 style="margin-left:350px; margin-bottom:.25;padding-left:100px;"> Book your slot</h3>
+     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Click here</button>
+    </form>
+
+                  </form>
+</div>
+    </div>
+
+
+
+
+</div>
+
+<br></div>
+{% endblock %}
